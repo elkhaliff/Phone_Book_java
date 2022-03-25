@@ -2,6 +2,7 @@ package phonebook;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,29 +26,27 @@ public class FileReader {
         return outList;
     }
 
-    private boolean bubbleSort(List<String> strings, long timeLimit) {
+    public static List<String> bubbleSort(String[] strings, long timeLimit) {
         var time = System.currentTimeMillis();
-        boolean step;
-
-
-        return true; /*
-        for (int i = 0; i < strings.size(); i++) {
-            if (i % 1000 == 0) {
+        var swap = true;
+        var shift = 0;
+        while (swap) {
+            if (shift % 1000 == 0) {
                 var timeCurr = System.currentTimeMillis() - time;
-                if (timeCurr > timeLimit) return false;
+               // if (timeCurr > timeLimit) return null;
+                System.out.println(shift);
             }
-            step = false;
-            for (int j = 0; j < strings.size() - i; j++) {
-                if (strings[j][1] > strings[j + 1][1]) {
-                    val tmp = strings[currPos]
-                    strings[currPos] = strings[currPos + 1]
-                    strings[currPos + 1] = tmp
-                    step = true
+            swap = false;
+            for (int j = 0; j < strings.length - shift - 1; j++) {
+                if (strings[j].compareTo(strings[j + 1]) > 0) {
+                    var tmp = strings[j];
+                    strings[j] = strings[j + 1];
+                    strings[j + 1] = tmp;
+                    swap = true;
                 }
             }
-            if (!step) return true;
+            shift++;
         }
-        return true;
-        */
+        return Arrays.asList(strings);
     }
 }
