@@ -8,12 +8,14 @@ import java.util.Scanner;
 public class FileReader {
     private List<String> outList;
 
-    public FileReader(String fileName) {
+    public FileReader(String fileName, boolean splitting) {
         File file = new File(fileName);
         outList = new ArrayList<>();
         try ( Scanner scanner = new Scanner(file) ) {
-            while (scanner.hasNext())
-                outList.add(scanner.nextLine());
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                outList.add(splitting ? line.split(" ", 2)[1] : line);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,15 +30,15 @@ public class FileReader {
         boolean step;
 
 
-
-        for (shift in 0 until (strings.size() - 1)) {
-            if (shift % 1000 == 0) {
-                val timeCurr = System.currentTimeMillis() - time
-                if (timeCurr > timeLimit) return false
+        return true; /*
+        for (int i = 0; i < strings.size(); i++) {
+            if (i % 1000 == 0) {
+                var timeCurr = System.currentTimeMillis() - time;
+                if (timeCurr > timeLimit) return false;
             }
-            step = false
-            for (currPos in 0 until (strings.size - shift - 1)) {
-                if (strings[currPos][1] > strings[currPos + 1][1]) {
+            step = false;
+            for (int j = 0; j < strings.size() - i; j++) {
+                if (strings[j][1] > strings[j + 1][1]) {
                     val tmp = strings[currPos]
                     strings[currPos] = strings[currPos + 1]
                     strings[currPos + 1] = tmp
@@ -46,5 +48,6 @@ public class FileReader {
             if (!step) return true;
         }
         return true;
+        */
     }
 }

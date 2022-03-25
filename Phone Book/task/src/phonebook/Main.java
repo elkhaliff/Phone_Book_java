@@ -11,19 +11,12 @@ public class Main {
         var fileFind = "D:/test/find.txt";
         var fileDir = "D:/test/directory.txt";
 
-        List<String> listFind = new FileReader(fileFind).getOutList();
-        List<String> listDir = new FileReader(fileDir).getOutList();
+        List<String> listFind = new FileReader(fileFind, false).getOutList();
+        List<String> listDir = new FileReader(fileDir, true).getOutList();
 
         var found = 0;
         for (String find: listFind) {
-            for (String dir: listDir) {
-                String[] arr = dir.split(" ");
-                String test = arr.length > 2 ? String.format("%s %s", arr[1], arr[2]) : arr[1];
-                if (find.equals(test)) {
-                    found++;
-                    continue;
-                }
-            }
+            if (listDir.contains(find)) found ++;
         }
         var timeTaken = formatter.format((System.currentTimeMillis() - time));
         println(String.format("Found %d / %d entries. Time taken: %s.", found, listFind.size(), timeTaken));
