@@ -34,7 +34,6 @@ public class FileReader {
             if (shift % 1000 == 0) {
                 var timeCurr = System.currentTimeMillis() - time;
                // if (timeCurr > timeLimit) return null;
-                System.out.println(shift);
             }
             swap = false;
             for (int j = 0; j < strings.length - shift - 1; j++) {

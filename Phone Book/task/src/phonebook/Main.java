@@ -9,8 +9,11 @@ public class Main {
         long time;
         int found;
         String timeTaken;
-        var fileFind = "D:/test/find.txt";
-        var fileDir = "D:/test/directory_out.txt";
+        var prefix = "D:/test/";
+        var fileFind = prefix + "find.txt";
+        var fileDir = prefix + "directory.txt";
+        var fileDirOut = prefix + "directory_out.txt";
+
         long timeLimit = 10000;
 
         List<String> listFind = new FileReader(fileFind, false).getOutList();
@@ -27,15 +30,19 @@ public class Main {
 
         println("Start searching (bubble sort + jump search)...");
         time = System.currentTimeMillis();
+        listDir = new FileReader(fileDirOut, true).getOutList();
         listDir = FileReader.bubbleSort(listDir.toArray(new String[0]), timeLimit);
         timeTaken = formatter.format((System.currentTimeMillis() - time));
-        println(String.format("Sorting time: %s.", timeTaken));
 
         finder = new Finder(listFind, listDir.toArray(new String[0]));
         time = System.currentTimeMillis();
         found = finder.jumpSearch();
-        timeTaken = formatter.format((System.currentTimeMillis() - time));
+        var timeTakenSearch = formatter.format((System.currentTimeMillis() - time));
         println(String.format("Found %d / %d entries. Time taken: %s.", found, listFind.size(), timeTaken));
+
+        println(String.format("Sorting time: %s.", timeTaken));
+        println(String.format("Searching time: %s.", timeTakenSearch));
+
 
     }
 
