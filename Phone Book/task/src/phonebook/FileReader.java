@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileReader {
-    private List<String> outList;
+    private final List<String> outList;
 
     public FileReader(String fileName, boolean splitting) {
         File file = new File(fileName);
@@ -26,14 +26,13 @@ public class FileReader {
         return outList;
     }
 
-    public static List<String> bubbleSort(String[] strings, long timeLimit) {
+    public static List<String> bubbleSort(String[] strings) {
         var time = System.currentTimeMillis();
         var swap = true;
         var shift = 0;
         while (swap) {
             if (shift % 1000 == 0) {
                 var timeCurr = System.currentTimeMillis() - time;
-               // if (timeCurr > timeLimit) return null;
             }
             swap = false;
             for (int j = 0; j < strings.length - shift - 1; j++) {
@@ -48,4 +47,35 @@ public class FileReader {
         }
         return Arrays.asList(strings);
     }
+
+    public static List<String> quickSort(String[] arrDirect) {
+        sorting(arrDirect, 0, arrDirect.length - 1);
+        return Arrays.asList(arrDirect);
+    }
+
+    private static void sorting(String array[], int start, int end) {
+        int i = start;
+        int k = end;
+        if (end - start >= 1) {
+            String pivot = array[start];
+            while (k > i) {
+                while (array[i].compareTo(pivot) <= 0 && i <= end && k > i)
+                    i++;
+                while (array[k].compareTo(pivot) > 0 && k >= start && k >= i)
+                    k--;
+                if (k > i)
+                    swap(array, i, k);
+            }
+            swap(array, start, k);
+            sorting(array, start, k - 1);
+            sorting(array, k + 1, end);
+        } else { return; }
+    }
+
+    private static void swap(String array[], int index1, int index2) {
+        String temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+    }
+
 }

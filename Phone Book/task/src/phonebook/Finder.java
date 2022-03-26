@@ -53,4 +53,21 @@ public class Finder {
         }
         return found;
     }
+
+
+    private int binarySearch_(String elem, int left, int right) {
+        if (left > right) return 0;
+        int mid = left + (right - left) / 2;
+        if (elem.equals(arrDirect[mid])) return 1;
+        if (elem.compareTo(arrDirect[mid]) < 0) return binarySearch_(elem, left, mid - 1);
+        else return binarySearch_(elem, mid + 1, right);
+    }
+
+    public int binarySearch() {
+        var found = 0;
+        for (String find: listFind) {
+            found += binarySearch_(find, 0, arrDirect.length - 1);
+        }
+        return found;
+    }
 }

@@ -14,8 +14,6 @@ public class Main {
         var fileDir = prefix + "directory.txt";
         var fileDirOut = prefix + "directory_out.txt";
 
-        long timeLimit = 10000;
-
         List<String> listFind = new FileReader(fileFind, false).getOutList();
         List<String> listDir = new FileReader(fileDir, true).getOutList();
 
@@ -27,11 +25,10 @@ public class Main {
         timeTaken = formatter.format((System.currentTimeMillis() - time));
         println(String.format("Found %d / %d entries. Time taken: %s.", found, listFind.size(), timeTaken));
 
-
         println("Start searching (bubble sort + jump search)...");
         time = System.currentTimeMillis();
         listDir = new FileReader(fileDirOut, true).getOutList();
-        listDir = FileReader.bubbleSort(listDir.toArray(new String[0]), timeLimit);
+        listDir = FileReader.bubbleSort(listDir.toArray(new String[0]));
         timeTaken = formatter.format((System.currentTimeMillis() - time));
 
         finder = new Finder(listFind, listDir.toArray(new String[0]));
@@ -44,6 +41,20 @@ public class Main {
         println(String.format("Searching time: %s.", timeTakenSearch));
 
 
+        println("Start searching (quick sort + binary search)...");
+        time = System.currentTimeMillis();
+        listDir = new FileReader(fileDir, true).getOutList();
+        listDir = FileReader.quickSort(listDir.toArray(new String[0]));
+        timeTaken = formatter.format((System.currentTimeMillis() - time));
+
+        finder = new Finder(listFind, listDir.toArray(new String[0]));
+        time = System.currentTimeMillis();
+        found = finder.binarySearch();
+        timeTakenSearch = formatter.format((System.currentTimeMillis() - time));
+        println(String.format("Found %d / %d entries. Time taken: %s.", found, listFind.size(), timeTaken));
+
+        println(String.format("Sorting time: %s.", timeTaken));
+        println(String.format("Searching time: %s.", timeTakenSearch));
     }
 
     public static void println(String str) { System.out.println(str); }
