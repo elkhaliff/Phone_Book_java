@@ -2,6 +2,7 @@ package phonebook;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -40,7 +41,6 @@ public class Main {
         println(String.format("Sorting time: %s.", timeTaken));
         println(String.format("Searching time: %s.", timeTakenSearch));
 
-
         println("Start searching (quick sort + binary search)...");
         time = System.currentTimeMillis();
         listDir = new FileReader(fileDir, true).getOutList();
@@ -54,6 +54,20 @@ public class Main {
         println(String.format("Found %d / %d entries. Time taken: %s.", found, listFind.size(), timeTaken));
 
         println(String.format("Sorting time: %s.", timeTaken));
+        println(String.format("Searching time: %s.", timeTakenSearch));
+
+        println("Start searching (hash table)...");
+        time = System.currentTimeMillis();
+        Map<String, Integer> hashListDir = new FileReader(fileDir).getOutMap();
+        timeTaken = formatter.format((System.currentTimeMillis() - time));
+
+        finder = new Finder(listFind, hashListDir);
+        time = System.currentTimeMillis();
+        found = finder.hashMapSearch();
+        timeTakenSearch = formatter.format((System.currentTimeMillis() - time));
+        println(String.format("Found %d / %d entries. Time taken: %s.", found, listFind.size(), timeTaken));
+
+        println(String.format("Creating time: %s.", timeTaken));
         println(String.format("Searching time: %s.", timeTakenSearch));
     }
 

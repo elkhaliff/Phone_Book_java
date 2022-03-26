@@ -1,17 +1,16 @@
 package phonebook;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileReader {
     private final List<String> outList;
+    private final Map<String, Integer> hashMap;
 
     public FileReader(String fileName, boolean splitting) {
         File file = new File(fileName);
         outList = new ArrayList<>();
+        hashMap = new HashMap<>();
         try ( Scanner scanner = new Scanner(file) ) {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
@@ -26,14 +25,27 @@ public class FileReader {
         return outList;
     }
 
+    public FileReader(String fileName) {
+        File file = new File(fileName);
+        outList = new ArrayList<>();
+        hashMap = new HashMap<>();
+        try ( Scanner scanner = new Scanner(file) ) {
+            while (scanner.hasNext()) {
+                String[] line = scanner.nextLine().split(" ", 2);
+                hashMap.put(line[1], Integer.parseInt(line[0]));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, Integer> getOutMap() { return hashMap; }
+
     public static List<String> bubbleSort(String[] strings) {
         var time = System.currentTimeMillis();
         var swap = true;
         var shift = 0;
         while (swap) {
-            if (shift % 1000 == 0) {
-                var timeCurr = System.currentTimeMillis() - time;
-            }
             swap = false;
             for (int j = 0; j < strings.length - shift - 1; j++) {
                 if (strings[j].compareTo(strings[j + 1]) > 0) {
@@ -53,7 +65,7 @@ public class FileReader {
         return Arrays.asList(arrDirect);
     }
 
-    private static void sorting(String array[], int start, int end) {
+    private static void sorting(String[] array, int start, int end) {
         int i = start;
         int k = end;
         if (end - start >= 1) {
@@ -72,10 +84,9 @@ public class FileReader {
         } else { return; }
     }
 
-    private static void swap(String array[], int index1, int index2) {
+    private static void swap(String[] array, int index1, int index2) {
         String temp = array[index1];
         array[index1] = array[index2];
         array[index2] = temp;
     }
-
 }

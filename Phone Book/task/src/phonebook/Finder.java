@@ -1,10 +1,12 @@
 package phonebook;
 
 import java.util.List;
+import java.util.Map;
 
 public class Finder {
     List<String> listFind;
     List<String> listDir;
+    Map<String, Integer> hashMap;
     String[] arrDirect;
 
     public Finder(List<String> f, List<String> d) {
@@ -17,6 +19,10 @@ public class Finder {
         arrDirect = d;
     }
 
+    public Finder(List<String> f, Map<String, Integer> d) {
+        listFind = f;
+        hashMap = d;
+    }
     public int linearSearch(){
         var found = 0;
         for (String find: listFind) {
@@ -68,6 +74,13 @@ public class Finder {
         for (String find: listFind) {
             found += binarySearch_(find, 0, arrDirect.length - 1);
         }
+        return found;
+    }
+
+    public int hashMapSearch() {
+        var found = 0;
+        for (String find: listFind)
+            if (hashMap.containsKey(find)) found++;
         return found;
     }
 }
